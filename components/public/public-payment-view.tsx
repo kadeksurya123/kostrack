@@ -67,11 +67,11 @@ export function PublicPaymentView() {
   }, [fetchData]);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col">
+    <div className="min-h-screen bg-[#F8FAFC] flex flex-col w-full max-w-full overflow-x-hidden">
       {/* Top Navbar */}
       <header className="bg-white border-b border-slate-200/80 sticky top-0 z-30">
         <div className="max-w-6xl mx-auto px-3.5 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-500 flex items-center justify-center text-white shadow-sm shadow-emerald-500/20 shrink-0">
               <Building2 className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
@@ -80,11 +80,11 @@ export function PublicPaymentView() {
                 <span className="font-bold text-slate-800 text-sm sm:text-base tracking-tight truncate">
                   KosTrack
                 </span>
-                <span className="text-[9px] sm:text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/60 px-1.5 sm:px-2 py-0.5 rounded-full shrink-0">
+                <span className="text-[9px] sm:text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/60 px-1.5 sm:px-2 py-0.2 rounded-full shrink-0">
                   Publik
                 </span>
               </div>
-              <p className="text-[11px] sm:text-xs text-slate-500 truncate max-w-[150px] sm:max-w-xs font-medium">
+              <p className="text-[10px] sm:text-xs text-slate-500 truncate max-w-[130px] sm:max-w-xs font-medium">
                 {meta?.boardingName || 'Papan Pembayaran Kos'}
               </p>
             </div>
@@ -94,18 +94,18 @@ export function PublicPaymentView() {
             <Button
               variant="outline"
               size="sm"
-              className="text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:border-emerald-200 h-8 sm:h-9 px-2.5 sm:px-3"
+              className="text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:border-emerald-200 h-8 sm:h-9 px-2.5 sm:px-3 gap-1 shrink-0 whitespace-nowrap"
             >
-              <LogIn className="w-3.5 h-3.5 sm:mr-1.5 text-slate-400" />
+              <LogIn className="w-3.5 h-3.5 text-slate-400" />
               <span className="hidden sm:inline">Login Pemilik (Admin)</span>
-              <span className="sm:hidden text-[11px]">Admin</span>
+              <span className="sm:hidden text-xs">Login Admin</span>
             </Button>
           </Link>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-3.5 sm:px-6 py-4 sm:py-8 space-y-4 sm:space-y-6">
+      <main className="flex-1 max-w-6xl w-full mx-auto px-3 sm:px-6 py-3.5 sm:py-8 space-y-3.5 sm:space-y-6">
         {/* Hero Banner */}
         <div className="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200/80 shadow-[0_1px_3px_0_rgba(0,0,0,0.05)] flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4">
           <div className="space-y-1">
@@ -113,7 +113,7 @@ export function PublicPaymentView() {
               <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-600" />
               <span>Privasi Terjaga & Bebas Login</span>
             </div>
-            <h1 className="text-lg sm:text-2xl font-bold text-slate-800 tracking-tight">
+            <h1 className="text-base sm:text-2xl font-bold text-slate-800 tracking-tight">
               Monitoring Pembayaran Uang Kos
             </h1>
             <p className="text-[11px] sm:text-xs text-slate-500 max-w-xl">
@@ -122,90 +122,92 @@ export function PublicPaymentView() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2 bg-slate-50 p-2.5 sm:p-3 rounded-xl border border-slate-200/70 w-full sm:w-auto shrink-0">
-            <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0" />
-            <div className="text-xs">
-              <span className="text-slate-400 block text-[9px] sm:text-[10px] font-semibold uppercase">
-                Jatuh Tempo Bulanan
-              </span>
-              <span className="font-bold text-slate-700 text-[11px] sm:text-xs">
-                Tanggal {meta?.dueDay || 10} Setiap Bulan
-              </span>
+          <div className="flex items-center justify-between sm:justify-start gap-2 bg-slate-50 p-2 sm:p-3 rounded-xl border border-slate-200/70 w-full md:w-auto shrink-0">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0" />
+              <div className="text-xs">
+                <span className="text-slate-400 block text-[9px] sm:text-[10px] font-semibold uppercase">
+                  Jatuh Tempo Bulanan
+                </span>
+                <span className="font-bold text-slate-700 text-[11px] sm:text-xs">
+                  Tanggal {meta?.dueDay || 10} Setiap Bulan
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Summary Stats Cards */}
+        {/* Summary Stats Cards: 3 Kolom Rapi di HP & Desktop */}
         <div className="grid grid-cols-3 gap-2 sm:gap-4">
-          <div className="bg-white rounded-xl p-3 sm:p-5 border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+          <div className="bg-white rounded-xl p-2.5 sm:p-5 border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
             <div className="space-y-0.5 sm:space-y-1">
               <span className="text-[9px] sm:text-xs font-semibold text-emerald-700 uppercase tracking-wider block">
                 Lunas
               </span>
-              <p className="text-xl sm:text-3xl font-bold text-slate-800">{meta?.totalPaid ?? 0}</p>
+              <p className="text-lg sm:text-3xl font-bold text-slate-800">{meta?.totalPaid ?? 0}</p>
               <p className="text-[10px] sm:text-[11px] text-slate-400 hidden sm:block">
                 Pembayaran diterima
               </p>
             </div>
-            <div className="w-7 h-7 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 self-end sm:self-auto">
-              <CheckCircle2 className="w-4 h-4 sm:w-6 sm:h-6" />
+            <div className="w-6 h-6 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 self-end sm:self-auto">
+              <CheckCircle2 className="w-3.5 h-3.5 sm:w-6 sm:h-6" />
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-3 sm:p-5 border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+          <div className="bg-white rounded-xl p-2.5 sm:p-5 border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
             <div className="space-y-0.5 sm:space-y-1">
               <span className="text-[9px] sm:text-xs font-semibold text-rose-700 uppercase tracking-wider block truncate">
                 Belum Bayar
               </span>
-              <p className="text-xl sm:text-3xl font-bold text-slate-800">{meta?.totalUnpaid ?? 0}</p>
+              <p className="text-lg sm:text-3xl font-bold text-slate-800">{meta?.totalUnpaid ?? 0}</p>
               <p className="text-[10px] sm:text-[11px] text-slate-400 hidden sm:block">
                 Sebelum jatuh tempo
               </p>
             </div>
-            <div className="w-7 h-7 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0 self-end sm:self-auto">
-              <Clock className="w-4 h-4 sm:w-6 sm:h-6" />
+            <div className="w-6 h-6 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0 self-end sm:self-auto">
+              <Clock className="w-3.5 h-3.5 sm:w-6 sm:h-6" />
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-3 sm:p-5 border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+          <div className="bg-white rounded-xl p-2.5 sm:p-5 border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
             <div className="space-y-0.5 sm:space-y-1">
               <span className="text-[9px] sm:text-xs font-semibold text-red-950 uppercase tracking-wider block">
                 Terlambat
               </span>
-              <p className="text-xl sm:text-3xl font-bold text-slate-800">{meta?.totalLate ?? 0}</p>
+              <p className="text-lg sm:text-3xl font-bold text-slate-800">{meta?.totalLate ?? 0}</p>
               <p className="text-[10px] sm:text-[11px] text-slate-400 hidden sm:block">
-                Lewat tanggal jatuh tempo
+                Lewat jatuh tempo
               </p>
             </div>
-            <div className="w-7 h-7 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-red-950 text-red-100 flex items-center justify-center shrink-0 self-end sm:self-auto">
-              <AlertOctagon className="w-4 h-4 sm:w-6 sm:h-6" />
+            <div className="w-6 h-6 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-red-950 text-red-100 flex items-center justify-center shrink-0 self-end sm:self-auto">
+              <AlertOctagon className="w-3.5 h-3.5 sm:w-6 sm:h-6" />
             </div>
           </div>
         </div>
 
         {/* Filter Bar & Controls */}
         <Card>
-          <CardContent className="p-3 sm:p-4 space-y-3">
+          <CardContent className="p-3 sm:p-4 space-y-2.5">
             <div className="flex flex-col md:flex-row gap-2.5 sm:gap-3 items-stretch md:items-center justify-between">
               {/* Search Field */}
               <div className="relative w-full md:w-80">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   placeholder="Cari nama atau kamar..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-slate-50/50"
+                  className="w-full pl-8 pr-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-slate-50/50"
                 />
               </div>
 
               {/* Month, Year & Refresh Filters */}
-              <div className="flex items-center gap-2 w-full md:w-auto">
+              <div className="flex items-center gap-1.5 sm:gap-2 w-full md:w-auto">
                 <select
                   value={selectedMonth}
                   onChange={(e) => setSelectedMonth(parseInt(e.target.value, 10))}
                   aria-label="Filter Bulan"
-                  className="flex-1 md:w-auto px-2.5 sm:px-3 py-2 text-xs rounded-xl border border-slate-200 bg-white font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+                  className="flex-1 md:w-auto px-2 sm:px-3 py-2 text-xs rounded-xl border border-slate-200 bg-white font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
                 >
                   {MONTH_NAMES.map((name, i) => (
                     <option key={i + 1} value={i + 1}>
@@ -218,7 +220,7 @@ export function PublicPaymentView() {
                   value={selectedYear}
                   onChange={(e) => setSelectedYear(parseInt(e.target.value, 10))}
                   aria-label="Filter Tahun"
-                  className="w-24 px-2.5 sm:px-3 py-2 text-xs rounded-xl border border-slate-200 bg-white font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+                  className="w-20 sm:w-24 px-2 sm:px-3 py-2 text-xs rounded-xl border border-slate-200 bg-white font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
                 >
                   <option value={2025}>2025</option>
                   <option value={2026}>2026</option>
@@ -230,7 +232,7 @@ export function PublicPaymentView() {
                   variant="outline"
                   onClick={fetchData}
                   disabled={loading}
-                  className="h-8.5 px-3 shrink-0"
+                  className="h-8.5 px-2.5 sm:px-3 shrink-0"
                   title="Segarkan data"
                 >
                   <RotateCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
@@ -239,28 +241,28 @@ export function PublicPaymentView() {
             </div>
 
             {/* Status Legend */}
-            <div className="pt-2.5 border-t border-slate-100 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] sm:text-xs text-slate-500">
+            <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[10px] sm:text-xs text-slate-500">
               <span className="font-semibold text-slate-600 flex items-center gap-1">
                 <Info className="w-3 h-3 text-slate-400" /> Keterangan:
               </span>
               <span className="inline-flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500" />
                 <strong className="text-slate-700">LUNAS</strong>
               </span>
               <span className="inline-flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-rose-500" />
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-rose-500" />
                 <strong className="text-slate-700">BELUM BAYAR</strong>
               </span>
               <span className="inline-flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-red-950" />
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-950" />
                 <strong className="text-slate-700">TERLAMBAT</strong>
               </span>
             </div>
           </CardContent>
         </Card>
 
-        {/* Data Container: Desktop Table + Mobile Cards */}
-        <Card>
+        {/* Data Container: Mobile Cards + Desktop Table */}
+        <Card className="overflow-hidden">
           <CardContent className="p-0">
             {error && (
               <div className="p-6 text-center text-xs text-rose-600">
@@ -272,12 +274,12 @@ export function PublicPaymentView() {
             )}
 
             {!error && loading ? (
-              <div className="py-14 text-center text-xs text-slate-400 flex flex-col items-center gap-2.5">
+              <div className="py-12 text-center text-xs text-slate-400 flex flex-col items-center gap-2">
                 <RotateCw className="w-5 h-5 animate-spin text-emerald-500" />
                 <p>Memuat status pembayaran...</p>
               </div>
             ) : !error && data.length === 0 ? (
-              <div className="py-14 text-center text-xs text-slate-400 flex flex-col items-center gap-2">
+              <div className="py-12 text-center text-xs text-slate-400 flex flex-col items-center gap-2">
                 <Users className="w-8 h-8 text-slate-300" />
                 <p>Tidak ada data pembayaran yang ditemukan untuk periode ini.</p>
               </div>
@@ -288,18 +290,18 @@ export function PublicPaymentView() {
                   {data.map((item) => (
                     <div
                       key={item.payment_id}
-                      className="p-3.5 flex items-center justify-between gap-3 hover:bg-slate-50/50 transition-colors"
+                      className="p-3.5 flex items-center justify-between gap-3 hover:bg-slate-50/60 transition-colors"
                     >
                       <div className="space-y-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 font-bold text-slate-700 text-[11px]">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 font-bold text-slate-700 text-[11px] shrink-0">
                             Kamar {item.room_number}
                           </span>
-                          <span className="font-semibold text-slate-900 text-sm truncate">
+                          <span className="font-semibold text-slate-900 text-xs sm:text-sm truncate">
                             {item.tenant_name}
                           </span>
                         </div>
-                        <p className="text-[11px] text-slate-400 flex items-center gap-1">
+                        <p className="text-[10px] text-slate-400 flex items-center gap-1">
                           <Calendar className="w-3 h-3 text-slate-400" />
                           <span>
                             {getMonthName(item.period_month)} {item.period_year}
@@ -308,7 +310,7 @@ export function PublicPaymentView() {
                       </div>
 
                       <div className="shrink-0">
-                        <Badge status={item.status} className="text-[11px] px-2.5 py-0.5" />
+                        <Badge status={item.status} className="text-[10px] px-2 py-0.5" />
                       </div>
                     </div>
                   ))}
@@ -356,7 +358,7 @@ export function PublicPaymentView() {
         </Card>
 
         {/* Privacy Note */}
-        <div className="text-center text-slate-400 text-[10px] sm:text-[11px] py-2 sm:py-4">
+        <div className="text-center text-slate-400 text-[10px] py-2">
           <p>
             Data dilindungi oleh kebijakan privasi KosTrack. Nomor telepon, email, dan catatan
             internal pemilik tidak dipublikasikan.
@@ -365,9 +367,9 @@ export function PublicPaymentView() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-slate-200/80 py-4 sm:py-6 mt-auto">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-3 text-xs text-slate-500">
-          <p className="text-[11px] sm:text-xs text-center sm:text-left">
+      <footer className="bg-white border-t border-slate-200/80 py-4 mt-auto">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+          <p className="text-[11px] text-center sm:text-left">
             &copy; {new Date().getFullYear()} <strong>KosTrack</strong> &bull; Sistem Monitoring
             Pembayaran Uang Kos
           </p>
