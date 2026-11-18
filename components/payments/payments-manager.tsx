@@ -144,17 +144,17 @@ export function PaymentsManager({ initialPayments, tenants }: PaymentsManagerPro
             Catat penerimaan uang kos, kelola status tagihan, dan pantau pembayaran penghuni
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
           <Button
             onClick={handleGenerate}
             isLoading={isGenerating}
             variant="ghost"
-            className="gap-2 border border-slate-200 text-slate-600 hover:bg-slate-50"
+            className="gap-2 border border-slate-200 text-slate-600 hover:bg-slate-50 w-full sm:w-auto justify-center"
           >
             <RefreshCw className="w-4 h-4" />
             Generate Tagihan Bulan Ini
           </Button>
-          <Button onClick={handleOpenAdd} className="gap-2">
+          <Button onClick={handleOpenAdd} className="gap-2 w-full sm:w-auto justify-center">
             <Plus className="w-4 h-4" />
             Catat Pembayaran Baru
           </Button>

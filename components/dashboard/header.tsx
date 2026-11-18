@@ -41,10 +41,11 @@ export function Header({ onOpenSidebar, boardingName = 'KosTrack' }: HeaderProps
         <Link
           href="/status-pembayaran"
           target="_blank"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/70 px-3 py-1.5 rounded-xl transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/70 px-2.5 sm:px-3 py-1.5 rounded-xl transition-colors shrink-0"
         >
           <ExternalLink className="w-3.5 h-3.5" />
-          <span>Halaman Publik</span>
+          <span className="hidden sm:inline">Halaman Publik</span>
+          <span className="sm:hidden text-[11px]">Publik</span>
         </Link>
       </div>
     </header>
