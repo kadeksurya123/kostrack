@@ -142,10 +142,16 @@ export async function createPayment(values: PaymentFormValues) {
 
   let computedStatus = validated.data.status;
   let paymentDate = validated.data.payment_date || null;
+  let paymentMethod = validated.data.payment_method || null;
 
-  if (computedStatus === 'LUNAS' && !paymentDate) {
-    paymentDate = new Date().toISOString().split('T')[0];
-  } else if (computedStatus !== 'LUNAS') {
+  if (computedStatus === 'LUNAS') {
+    if (!paymentDate) {
+      paymentDate = new Date().toISOString().split('T')[0];
+    }
+  } else {
+    // Jika BUKAN lunas, tanggal bayar dan metode bayar WAJIB null
+    paymentDate = null;
+    paymentMethod = null;
     computedStatus = calculatePaymentStatus({
       periodMonth: validated.data.period_month,
       periodYear: validated.data.period_year,
@@ -163,7 +169,7 @@ export async function createPayment(values: PaymentFormValues) {
         period_year: validated.data.period_year,
         amount: validated.data.amount,
         payment_date: paymentDate,
-        payment_method: validated.data.payment_method || null,
+        payment_method: paymentMethod,
         status: computedStatus,
         notes: validated.data.notes?.trim() || null,
       },
@@ -220,10 +226,16 @@ export async function updatePayment(id: string, values: PaymentFormValues) {
 
   let computedStatus = validated.data.status;
   let paymentDate = validated.data.payment_date || null;
+  let paymentMethod = validated.data.payment_method || null;
 
-  if (computedStatus === 'LUNAS' && !paymentDate) {
-    paymentDate = new Date().toISOString().split('T')[0];
-  } else if (computedStatus !== 'LUNAS') {
+  if (computedStatus === 'LUNAS') {
+    if (!paymentDate) {
+      paymentDate = new Date().toISOString().split('T')[0];
+    }
+  } else {
+    // Jika BUKAN lunas, tanggal bayar dan metode bayar WAJIB null
+    paymentDate = null;
+    paymentMethod = null;
     computedStatus = calculatePaymentStatus({
       periodMonth: validated.data.period_month,
       periodYear: validated.data.period_year,
@@ -240,7 +252,7 @@ export async function updatePayment(id: string, values: PaymentFormValues) {
       period_year: validated.data.period_year,
       amount: validated.data.amount,
       payment_date: paymentDate,
-      payment_method: validated.data.payment_method || null,
+      payment_method: paymentMethod,
       status: computedStatus,
       notes: validated.data.notes?.trim() || null,
     })

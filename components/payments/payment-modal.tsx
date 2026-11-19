@@ -116,11 +116,18 @@ export function PaymentModal({
 
   const onSubmit = async (values: PaymentFormValues) => {
     setServerError(null);
+    // Jika bukan lunas, bersihkan tanggal dan metode bayar
+    const cleanedValues: PaymentFormValues = {
+      ...values,
+      payment_date: values.status === 'LUNAS' ? values.payment_date : '',
+      payment_method: values.status === 'LUNAS' ? values.payment_method : undefined,
+    };
+
     let res;
     if (paymentToEdit) {
-      res = await updatePayment(paymentToEdit.id, values);
+      res = await updatePayment(paymentToEdit.id, cleanedValues);
     } else {
-      res = await createPayment(values);
+      res = await createPayment(cleanedValues);
     }
 
     if (!res.success) {

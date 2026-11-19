@@ -23,8 +23,38 @@ import { PublicApiResponse, PublicPaymentItem } from '@/types';
 
 export function PublicPaymentView() {
   const now = new Date();
-  const [selectedMonth, setSelectedMonth] = useState<number>(now.getMonth() + 1);
-  const [selectedYear, setSelectedYear] = useState<number>(now.getFullYear());
+
+  // Persistent filter bulan & tahun di localStorage (tidak reset saat refresh!)
+  const [selectedMonth, setSelectedMonthState] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('kostrack_public_month');
+      if (saved) return parseInt(saved, 10);
+    }
+    return now.getMonth() + 1;
+  });
+
+  const [selectedYear, setSelectedYearState] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('kostrack_public_year');
+      if (saved) return parseInt(saved, 10);
+    }
+    return now.getFullYear();
+  });
+
+  const setSelectedMonth = (m: number) => {
+    setSelectedMonthState(m);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('kostrack_public_month', m.toString());
+    }
+  };
+
+  const setSelectedYear = (y: number) => {
+    setSelectedYearState(y);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('kostrack_public_year', y.toString());
+    }
+  };
+
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   const [loading, setLoading] = useState<boolean>(true);

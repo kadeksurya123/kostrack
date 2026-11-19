@@ -18,13 +18,26 @@ export function calculatePaymentStatus({
   dueDay?: number;
   manualStatus?: PaymentStatus;
 }): PaymentStatus {
-  if (isPaid || manualStatus === 'LUNAS' || (paymentDate && paymentDate.trim() !== '')) {
+  // Jika manualStatus secara eksplisit LUNAS atau isPaid bernilai true
+  if (manualStatus === 'LUNAS' || isPaid) {
     return 'LUNAS';
   }
 
-  // Buat batas tanggal jatuh tempo
+  // Jika manualStatus eksplisit BELUM BAYAR atau TERLAMBAT:
+  // JANGAN biarkan paymentDate mengubahnya menjadi LUNAS!
+  if (manualStatus === 'BELUM BAYAR' || manualStatus === 'TERLAMBAT') {
+    const now = new Date();
+    const dueDate = new Date(periodYear, periodMonth - 1, dueDay, 23, 59, 59);
+    return now > dueDate ? 'TERLAMBAT' : 'BELUM BAYAR';
+  }
+
+  // Jika tidak ada manualStatus dan ada tanggal bayar valid
+  if (paymentDate && paymentDate.trim() !== '') {
+    return 'LUNAS';
+  }
+
+  // Hitung otomatis berdasarkan batas tanggal jatuh tempo
   const now = new Date();
-  // Bulan di JS Date adalah 0-indexed (0 = Januari, 11 = Desember)
   const dueDate = new Date(periodYear, periodMonth - 1, dueDay, 23, 59, 59);
 
   if (now > dueDate) {
