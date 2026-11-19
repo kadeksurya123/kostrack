@@ -152,12 +152,7 @@ export async function createPayment(values: PaymentFormValues) {
     // Jika BUKAN lunas, tanggal bayar dan metode bayar WAJIB null
     paymentDate = null;
     paymentMethod = null;
-    computedStatus = calculatePaymentStatus({
-      periodMonth: validated.data.period_month,
-      periodYear: validated.data.period_year,
-      dueDay,
-      manualStatus: computedStatus,
-    });
+    // Status tetap sesuai pilihan Admin (BELUM BAYAR atau TERLAMBAT), tidak ditimpa
   }
 
   const { data, error } = await supabase
@@ -236,12 +231,7 @@ export async function updatePayment(id: string, values: PaymentFormValues) {
     // Jika BUKAN lunas, tanggal bayar dan metode bayar WAJIB null
     paymentDate = null;
     paymentMethod = null;
-    computedStatus = calculatePaymentStatus({
-      periodMonth: validated.data.period_month,
-      periodYear: validated.data.period_year,
-      dueDay,
-      manualStatus: computedStatus,
-    });
+    // Status tetap sesuai pilihan Admin (BELUM BAYAR atau TERLAMBAT), tidak ditimpa
   }
 
   const { data, error } = await supabase
