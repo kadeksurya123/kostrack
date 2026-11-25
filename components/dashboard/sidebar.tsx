@@ -79,8 +79,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         {/* Brand / Logo */}
         <div className="h-16 px-6 border-b border-slate-100 flex items-center justify-between">
           <Link href="/admin/dashboard" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-emerald-500 flex items-center justify-center text-white shadow-sm shadow-emerald-500/20">
-              <Building2 className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-xl overflow-hidden shadow-sm shrink-0 border border-slate-200">
+              <img src="/logo.jpg" alt="KosTrack Logo" className="w-full h-full object-cover" />
             </div>
             <div>
               <span className="font-bold text-slate-800 text-base tracking-tight">KosTrack</span>

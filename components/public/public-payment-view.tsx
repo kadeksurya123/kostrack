@@ -102,8 +102,8 @@ export function PublicPaymentView() {
       <header className="bg-white border-b border-slate-200/80 sticky top-0 z-30">
         <div className="max-w-6xl mx-auto px-3.5 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-500 flex items-center justify-center text-white shadow-sm shadow-emerald-500/20 shrink-0">
-              <Building2 className="w-4 h-4 sm:w-5 sm:h-5" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl overflow-hidden shadow-sm shrink-0 border border-slate-200">
+              <img src="/logo.jpg" alt="KosTrack Logo" className="w-full h-full object-cover" />
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-1.5 sm:gap-2">

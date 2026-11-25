@@ -156,8 +156,8 @@ export function LoginForm() {
       <div className="bg-white rounded-2xl border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] p-5 sm:p-8">
         {/* Header */}
         <div className="text-center space-y-2 mb-8">
-          <div className="inline-flex w-12 h-12 rounded-2xl bg-emerald-500 text-white items-center justify-center shadow-md shadow-emerald-500/20 mb-2">
-            <Building2 className="w-6 h-6" />
+          <div className="inline-flex w-14 h-14 rounded-2xl overflow-hidden shadow-md mb-2 border border-slate-200">
+            <img src="/logo.jpg" alt="KosTrack Logo" className="w-full h-full object-cover" />
           </div>
           <h1 className="text-2xl font-bold text-slate-800 tracking-tight">KosTrack Admin</h1>
           <p className="text-xs text-slate-500">
