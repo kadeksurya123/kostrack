@@ -15,6 +15,7 @@ export function LoginForm() {
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get('redirect') || '/admin/dashboard';
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const {
     register,
@@ -54,8 +55,12 @@ export function LoginForm() {
         return;
       }
 
-      router.push(redirectUrl);
-      router.refresh();
+      // Tampilkan animasi & gambar Verifikasi Berhasil
+      setIsSuccess(true);
+      setTimeout(() => {
+        router.push(redirectUrl);
+        router.refresh();
+      }, 1800);
     } catch {
       setErrorMessage('Terjadi kesalahan saat menghubungi server autentikasi.');
     }
@@ -63,6 +68,30 @@ export function LoginForm() {
 
   return (
     <div className="w-full max-w-md">
+      {/* Overlay Animasi Sukses Login */}
+      {isSuccess && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl p-6 sm:p-7 max-w-xs sm:max-w-sm w-full text-center shadow-2xl border border-slate-100 flex flex-col items-center animate-in zoom-in-95 duration-200">
+            <div className="w-48 h-48 sm:w-56 sm:h-56 rounded-2xl overflow-hidden shadow-md mb-4 border-2 border-emerald-500 bg-slate-50 flex items-center justify-center">
+              <img
+                src="/login-success.jpg"
+                alt="Verifikasi Berhasil"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <h3 className="text-lg sm:text-xl font-bold text-slate-800 tracking-tight">
+              Verifikasi Berhasil!
+            </h3>
+            <p className="text-xs text-slate-500 mt-1">
+              Sedang mengalihkan ke Dashboard Admin...
+            </p>
+            <div className="w-full bg-slate-100 h-1.5 rounded-full mt-4 overflow-hidden">
+              <div className="bg-emerald-500 h-full w-full animate-pulse rounded-full" />
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="bg-white rounded-2xl border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] p-5 sm:p-8">
         {/* Header */}
         <div className="text-center space-y-2 mb-8">
