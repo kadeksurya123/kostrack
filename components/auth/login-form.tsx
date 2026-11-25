@@ -16,6 +16,7 @@ export function LoginForm() {
   const redirectUrl = searchParams.get('redirect') || '/admin/dashboard';
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [isFailed, setIsFailed] = useState<boolean>(false);
 
   const {
     register,
@@ -31,6 +32,7 @@ export function LoginForm() {
 
   const onSubmit = async (values: LoginFormValues) => {
     setErrorMessage(null);
+    setIsFailed(false);
 
     if (!isSupabaseConfigured()) {
       setErrorMessage(
@@ -47,11 +49,16 @@ export function LoginForm() {
       });
 
       if (error) {
-        if (error.message.includes('Invalid login credentials')) {
-          setErrorMessage('Email atau kata sandi tidak sesuai.');
-        } else {
-          setErrorMessage(error.message);
-        }
+        const errorText = error.message.includes('Invalid login credentials')
+          ? 'Email atau kata sandi tidak sesuai.'
+          : error.message;
+
+        setErrorMessage(errorText);
+        // Tampilkan pop-up Verifikasi Gagal
+        setIsFailed(true);
+        setTimeout(() => {
+          setIsFailed(false);
+        }, 2200);
         return;
       }
 
@@ -63,6 +70,10 @@ export function LoginForm() {
       }, 1800);
     } catch {
       setErrorMessage('Terjadi kesalahan saat menghubungi server autentikasi.');
+      setIsFailed(true);
+      setTimeout(() => {
+        setIsFailed(false);
+      }, 2200);
     }
   };
 
@@ -88,6 +99,40 @@ export function LoginForm() {
             <div className="w-full bg-slate-100 h-1.5 rounded-full mt-4 overflow-hidden">
               <div className="bg-emerald-500 h-full w-full animate-pulse rounded-full" />
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Overlay Animasi Gagal Login */}
+      {isFailed && (
+        <div 
+          onClick={() => setIsFailed(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 animate-in fade-in duration-200 cursor-pointer"
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()} 
+            className="bg-white rounded-3xl p-6 sm:p-7 max-w-xs sm:max-w-sm w-full text-center shadow-2xl border border-rose-200 flex flex-col items-center animate-in zoom-in-95 duration-200"
+          >
+            <div className="w-48 h-48 sm:w-56 sm:h-56 rounded-2xl overflow-hidden shadow-md mb-4 border-2 border-rose-500 bg-slate-50 flex items-center justify-center">
+              <img
+                src="/login-failed.jpg"
+                alt="Verifikasi Gagal"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <h3 className="text-lg sm:text-xl font-bold text-rose-600 tracking-tight">
+              Verifikasi Gagal!
+            </h3>
+            <p className="text-xs text-slate-500 mt-1">
+              {errorMessage || 'Email atau kata sandi tidak sesuai.'}
+            </p>
+            <button
+              type="button"
+              onClick={() => setIsFailed(false)}
+              className="mt-4 px-4 py-1.5 text-xs font-semibold rounded-xl bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition-colors"
+            >
+              Coba Lagi
+            </button>
           </div>
         </div>
       )}
