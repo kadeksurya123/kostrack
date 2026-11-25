@@ -30,6 +30,18 @@ export function LoginForm() {
     },
   });
 
+  const onFormError = (formErrors: any) => {
+    const errorMsg =
+      formErrors.email?.message ||
+      formErrors.password?.message ||
+      'Format email atau password belum sesuai.';
+    setErrorMessage(errorMsg);
+    setIsFailed(true);
+    setTimeout(() => {
+      setIsFailed(false);
+    }, 2800);
+  };
+
   const onSubmit = async (values: LoginFormValues) => {
     setErrorMessage(null);
     setIsFailed(false);
@@ -38,6 +50,10 @@ export function LoginForm() {
       setErrorMessage(
         'Supabase belum terhubung. Silakan isi NEXT_PUBLIC_SUPABASE_URL dan NEXT_PUBLIC_SUPABASE_ANON_KEY di file .env.local untuk mengaktifkan autentikasi akun admin Anda.'
       );
+      setIsFailed(true);
+      setTimeout(() => {
+        setIsFailed(false);
+      }, 2800);
       return;
     }
 
@@ -58,7 +74,7 @@ export function LoginForm() {
         setIsFailed(true);
         setTimeout(() => {
           setIsFailed(false);
-        }, 2200);
+        }, 2800);
         return;
       }
 
@@ -67,13 +83,13 @@ export function LoginForm() {
       setTimeout(() => {
         router.push(redirectUrl);
         router.refresh();
-      }, 1800);
+      }, 2000);
     } catch {
       setErrorMessage('Terjadi kesalahan saat menghubungi server autentikasi.');
       setIsFailed(true);
       setTimeout(() => {
         setIsFailed(false);
-      }, 2200);
+      }, 2800);
     }
   };
 
@@ -81,22 +97,22 @@ export function LoginForm() {
     <div className="w-full max-w-md">
       {/* Overlay Animasi Sukses Login */}
       {isSuccess && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-3xl p-6 sm:p-7 max-w-xs sm:max-w-sm w-full text-center shadow-2xl border border-slate-100 flex flex-col items-center animate-in zoom-in-95 duration-200">
-            <div className="w-48 h-48 sm:w-56 sm:h-56 rounded-2xl overflow-hidden shadow-md mb-4 border-2 border-emerald-500 bg-slate-50 flex items-center justify-center">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl p-6 sm:p-7 max-w-xs sm:max-w-sm w-full text-center shadow-2xl border-2 border-emerald-400 flex flex-col items-center animate-in zoom-in-95 duration-200">
+            <div className="w-52 h-52 sm:w-60 sm:h-60 rounded-2xl overflow-hidden shadow-lg mb-4 border-2 border-emerald-500 bg-slate-50 flex items-center justify-center">
               <img
                 src="/login-success.jpg"
                 alt="Verifikasi Berhasil"
                 className="w-full h-full object-cover"
               />
             </div>
-            <h3 className="text-lg sm:text-xl font-bold text-slate-800 tracking-tight">
+            <h3 className="text-xl font-bold text-emerald-600 tracking-tight">
               Verifikasi Berhasil!
             </h3>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-slate-500 mt-1 font-medium">
               Sedang mengalihkan ke Dashboard Admin...
             </p>
-            <div className="w-full bg-slate-100 h-1.5 rounded-full mt-4 overflow-hidden">
+            <div className="w-full bg-slate-100 h-2 rounded-full mt-4 overflow-hidden">
               <div className="bg-emerald-500 h-full w-full animate-pulse rounded-full" />
             </div>
           </div>
@@ -107,29 +123,29 @@ export function LoginForm() {
       {isFailed && (
         <div 
           onClick={() => setIsFailed(false)}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 animate-in fade-in duration-200 cursor-pointer"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-in fade-in duration-200 cursor-pointer"
         >
           <div 
             onClick={(e) => e.stopPropagation()} 
-            className="bg-white rounded-3xl p-6 sm:p-7 max-w-xs sm:max-w-sm w-full text-center shadow-2xl border border-rose-200 flex flex-col items-center animate-in zoom-in-95 duration-200"
+            className="bg-white rounded-3xl p-6 sm:p-7 max-w-xs sm:max-w-sm w-full text-center shadow-2xl border-2 border-rose-400 flex flex-col items-center animate-in zoom-in-95 duration-200"
           >
-            <div className="w-48 h-48 sm:w-56 sm:h-56 rounded-2xl overflow-hidden shadow-md mb-4 border-2 border-rose-500 bg-slate-50 flex items-center justify-center">
+            <div className="w-52 h-52 sm:w-60 sm:h-60 rounded-2xl overflow-hidden shadow-lg mb-4 border-2 border-rose-500 bg-slate-50 flex items-center justify-center">
               <img
                 src="/login-failed.jpg"
                 alt="Verifikasi Gagal"
                 className="w-full h-full object-cover"
               />
             </div>
-            <h3 className="text-lg sm:text-xl font-bold text-rose-600 tracking-tight">
+            <h3 className="text-xl font-bold text-rose-600 tracking-tight">
               Verifikasi Gagal!
             </h3>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-slate-600 mt-1 font-medium">
               {errorMessage || 'Email atau kata sandi tidak sesuai.'}
             </p>
             <button
               type="button"
               onClick={() => setIsFailed(false)}
-              className="mt-4 px-4 py-1.5 text-xs font-semibold rounded-xl bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition-colors"
+              className="mt-4 px-5 py-2 text-xs font-bold rounded-xl bg-rose-600 text-white hover:bg-rose-700 shadow-sm transition-colors"
             >
               Coba Lagi
             </button>
@@ -156,7 +172,7 @@ export function LoginForm() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit, onFormError)} className="space-y-4">
           <div className="relative">
             <Input
               type="email"
